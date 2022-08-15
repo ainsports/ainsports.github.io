@@ -36,12 +36,18 @@ parser.add_argument('--CPU',   required=False, action='store_true',  help='Run o
 parser.add_argument('--loglevel',   required=False, type=str,   default='INFO', help='logging level')
 
 args, unknown = parser.parse_known_args()
+model = None 
 
 @app.route('/recieve', methods = ['GET', 'POST'])
 def recieve():
     if request.method == 'POST':
         f = request.files['file']
         f.save('video.mp4')
-        model = initialize_model(args)
+        
         json_data = run_test(args, model)
         return json_data
+
+if __name__ == '__main__':
+    print('loadding model ...')
+    model = initialize_model(args) 
+    app.run(debug = True)
