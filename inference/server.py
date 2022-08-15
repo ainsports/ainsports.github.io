@@ -1,12 +1,12 @@
 from flask import Flask, redirect, url_for, request
 from argparse import ArgumentParser, ArgumentDefaultsHelpFormatter
-# from run import initialize_model
+from run import initialize_model, run_test
 import os 
 
 app = Flask(__name__)
 parser = ArgumentParser(description='context aware loss function', formatter_class=ArgumentDefaultsHelpFormatter)
 
-parser.add_argument('--video_path',   required=False, type=str, help='Path to the video dataset folder' )
+parser.add_argument('--video_path',   required=False, type=str, default="video.mp4", help='Path to the video dataset folder' )
 parser.add_argument('--features',   required=False, type=str,   default="ResNET_PCA512.npy",     help='Video features' )
 parser.add_argument('--max_epochs',   required=False, type=int,   default=1000,     help='Maximum number of epochs' )
 parser.add_argument('--load_weights',   required=False, type=str,   default=None,     help='weights to load' )
@@ -37,19 +37,11 @@ parser.add_argument('--loglevel',   required=False, type=str,   default='INFO', 
 
 args, unknown = parser.parse_known_args()
 
-# @app.route("/")
-# def hello_world():
-#     model = initialize_model(args)
-#     json_data = run_test(args, model)
-#     return json_data
-
-@app.route("/receive", methods=['post'])
-def receive():
-    files = request.files
-    print(request)
-    print(files)
-    print(request.files['file'])
-    file = files.get('file')
-    print(file)
-    with open(os.path.abspath(f'{file}'), 'wb') as f:
-        f.write(file.content)
+@app.route('/recieve', methods = ['GET', 'POST'])
+def recieve():
+    if request.method == 'POST':
+        f = request.files['file']
+        f.save('video.mp4')
+        model = initialize_model(args)
+        json_data = run_test(args, model)
+        return json_data
