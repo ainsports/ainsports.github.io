@@ -15,15 +15,6 @@ from train import test
 torch.manual_seed(0)
 np.random.seed(0)
 
-# Load the arguments
-
-
-
-# Setup the GPU
-if args.GPU >= 0:
-    os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
-    os.environ["CUDA_VISIBLE_DEVICES"] = str(args.GPU)
-
 def initialize_model(args):
 
     # Create the deep learning model
