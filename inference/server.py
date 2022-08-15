@@ -41,12 +41,9 @@ model = None
 @app.route('/recieve', methods = ['GET', 'POST'])
 def recieve():
     if request.method == 'POST':
+        print("recieved POST")
         f = request.files['file']
         f.save('video.mp4')
-        
+        model = initialize_model(args) 
         json_data = run_test(args, model)
         return json_data
-
-print('loadding model ...')
-model = initialize_model(args) 
-app.run(debug = True)
