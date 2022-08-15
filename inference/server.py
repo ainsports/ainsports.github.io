@@ -47,7 +47,6 @@ def recieve():
         json_data = run_test(args, model)
         return json_data
 
-if __name__ == '__main__':
-    print('loadding model ...')
-    model = initialize_model(args) 
-    app.run(debug = True)
+print('loadding model ...')
+model = initialize_model(args) 
+app.run(debug = True)
