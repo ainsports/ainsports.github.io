@@ -40,7 +40,6 @@ def main(args):
         batch_size=1, shuffle=False,
         num_workers=1, pin_memory=True)
 
-    
     # Load the best model and compute its performance
     if args.CPU:
         checkpoint = torch.load(os.path.join("models", args.model_name, "model.pth.tar"), map_location=torch.device('cpu'))
