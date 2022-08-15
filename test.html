@@ -1,0 +1,43 @@
+<!-- <input type='file'  id='uploadfile' />
+
+<video width="320" height="240" controls>
+  Your browser does not support the video tag.
+</video>
+<button onclick="send()">
+    Send
+</button> -->
+<html>
+   <body>
+      <form action = "http://localhost:5000/uploader" method = "POST" 
+         enctype = "multipart/form-data">
+         <input type = "file" name = "file" />
+         <input type = "submit"/>
+      </form>   
+   </body>
+</html>
+
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+
+<script>
+var videoURL;
+document.getElementById("uploadfile")
+.onchange = function(event) {
+    let file = event.target.files[0];
+    let blobURL = URL.createObjectURL(file);
+    document.querySelector("video").src = blobURL;
+    videoURL = blobURL
+}
+function send(){
+    var form_data = new FormData();
+    form_data.append('file', videoURL);
+    fetch('http://127.0.0.1:5000/receive', {
+        mode: 'no-cors',
+        method: 'POST',
+        body: form_data
+
+    }).then(response => response.json()
+    ).then(json => {
+    console.log(json)
+    });
+}
+</script>
