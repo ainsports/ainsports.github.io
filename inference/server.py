@@ -1,4 +1,4 @@
-from flask import Flask, redirect, url_for, request
+from flask import Flask, redirect, url_for, request, render_template
 from argparse import ArgumentParser, ArgumentDefaultsHelpFormatter
 from run import initialize_model, run_test
 import os 
@@ -37,6 +37,10 @@ parser.add_argument('--loglevel',   required=False, type=str,   default='INFO', 
 
 args, unknown = parser.parse_known_args()
 model = None 
+
+@app.route('/upload')
+def upload_file():
+   return render_template('upload.html')
 
 @app.route('/recieve', methods = ['GET', 'POST'])
 def recieve():
