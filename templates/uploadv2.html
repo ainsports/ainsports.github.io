@@ -44,8 +44,20 @@
 
       fetch('http://104.196.238.168:5000/recieve', {
       method: 'POST',
+      mode: 'no-cors',
       body: data
-      }) .then((response) => response.json())
+      }) .then(
+        (data) => {
+          console.log(data)
+          console.log(data.text)
+          console.log(data.text())
+          console.log(data.json())
+          return data.json()
+        }
+      ).then(function (text) {
+          console.log('GET response:');
+          console.log(text); 
+      });;
     }
     </script>
 </html>

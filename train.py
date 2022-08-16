@@ -7,6 +7,7 @@ import numpy as np
 import math
 from preprocessing import batch2long, timestamps2long, visualize, NMS
 from json_io import predictions2json
+from flask import jsonify
 
 def test(dataloader,model, model_name, save_predictions=False, cpu = False):
 
@@ -55,4 +56,4 @@ def test(dataloader,model, model_name, save_predictions=False, cpu = False):
     # for i in np.arange(17):
     #     visualize(detections_numpy, segmentation_numpy,i)
     print(json_data)
-    return json_data
+    return jsonify(json_data)
