@@ -11,7 +11,7 @@ print(args.CPU)
 
 @app.route('/upload')
 def upload_file():
-   return render_template('upload.html')
+   return render_template('uploadv2.html')
 
 @app.route('/recieve', methods = ['GET', 'POST'])
 def recieve():
@@ -24,4 +24,4 @@ def recieve():
         # dataset, model = initialize_model(args) 
         # json_data = run_test(args, model, dataset)
         # return json_data
-        return jsonify({"hi", "there"})
+        return jsonify({"hi": "there"})
