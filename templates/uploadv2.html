@@ -48,9 +48,6 @@
       }) .then(
         (data) => {
           console.log(data)
-          console.log(data.text)
-          console.log(data.text())
-          console.log(data.json())
           return data.json()
         }
       ).then(function (text) {
