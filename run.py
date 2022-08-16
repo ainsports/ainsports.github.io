@@ -35,7 +35,7 @@ def run_test(args, model):
     test_loader = torch.utils.data.DataLoader(dataset_Test,
         batch_size=1, shuffle=False,
         num_workers=1, pin_memory=True)
-    return test(test_loader, model=model, model_name=args.model_name, save_predictions=Trueh, cpu = args.CPU)
+    return test(test_loader, model=model, model_name=args.model_name, save_predictions=True, cpu = args.CPU)
 
 
 
