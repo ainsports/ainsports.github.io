@@ -23,7 +23,10 @@ def initialize_model(args):
         model = model.cuda()
     
     # Load the best model and compute its performance
-    checkpoint = torch.load(os.path.join("models", args.model_name, "model.pth.tar"))
+    if args.CPU:
+        checkpoint = torch.load(os.path.join("models", args.model_name, "model.pth.tar"), map_location=torch.device('cpu'))
+    else:
+        checkpoint = torch.load(os.path.join("models", args.model_name, "model.pth.tar"))
     model.load_state_dict(checkpoint['state_dict'])
     return model
 
