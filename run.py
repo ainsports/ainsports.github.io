@@ -28,7 +28,7 @@ def initialize_model(args):
     else:
         checkpoint = torch.load(os.path.join("models", args.model_name, "model.pth.tar"))
     model.load_state_dict(checkpoint['state_dict'])
-    return dataset, model
+    return dataset_Test, model
 
 def run_test(args, model, dataset_Test):
     test_loader = torch.utils.data.DataLoader(dataset_Test,
