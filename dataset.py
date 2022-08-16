@@ -29,12 +29,12 @@ class SoccerNetClipsTesting(Dataset):
         self.num_classes = 17
         self.num_detections =15
 
-        #Changing video format to 
-        ff = ffmpy.FFmpeg(
-             inputs={self.path: ""},
-             outputs={"outputs/videoLQ.mkv": '-y -r 25 -vf scale=-1:224 -max_muxing_queue_size 9999'})
-        print(ff.cmd)
-        ff.run()
+#         #Changing video format to 
+#         ff = ffmpy.FFmpeg(
+#              inputs={self.path: ""},
+#              outputs={"outputs/videoLQ.mkv": '-y -r 25 -vf scale=-1:224 -max_muxing_queue_size 9999'})
+#         print(ff.cmd)
+#         ff.run()
 
         print("Initializing feature extractor")
         myFeatureExtractor = VideoFeatureExtractor(
@@ -45,7 +45,7 @@ class SoccerNetClipsTesting(Dataset):
             FPS=self.framerate)
 
         print("Extracting frames")
-        myFeatureExtractor.extractFeatures(path_video_input="outputs/videoLQ.mkv",
+        myFeatureExtractor.extractFeatures(path_video_input=self.path,
                                            path_features_output="outputs/features.npy",
                                            overwrite=True)
 
