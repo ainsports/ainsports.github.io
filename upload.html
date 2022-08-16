@@ -1,9 +1,76 @@
 <html>
-   <body>
-      <form action = "http://localhost:5000/uploader" method = "POST" 
-         enctype = "multipart/form-data">
-         <input type = "file" name = "file" />
-         <input type = "submit"/>
-      </form>   
-   </body>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+    </style>
+    <div class="container">
+          
+      <div class="row">
+        <div class="col-4">
+          <input type="file" class="d-none" id="addVideosInput" accept=" video/*">
+          <button class="btn btn-secondary" id="addVideosBtn">Add Video <i class="fa fa-camera"></i> </button>
+          <button class="btn btn-primary" id="submit" onclick="upload()">Upload</button>
+        </div>
+        <div class="col-md-12">
+          <div class="video-frame">
+          </div>
+        </div>
+      </div>
+    
+      <div id="timeline" style="display:inline">
+        <!-- Timeline -->
+        <ul id="list">
+        </ul>
+      </div>
+    </div>
+
+   <script>
+      
+    $('#addVideosBtn').click(function() {
+      $(this).parents().find('#addVideosInput').click();
+    });
+
+    document.getElementById('addVideosInput').onchange = e => {
+        const file = e.target.files[0];
+        const url = URL.createObjectURL(file);
+        const video = `<video controls="controls" src=" ${url} " id = "video" type="video/mp4" width="400px" height="200px"></video>
+            <span><i class="fa fa-trash"></i></span>`
+        $('.video-frame').append(video);
+        var videoElement = document.getElementById("video")
+        var duration = videoElement.duration;
+        videoElement.addEventListener('loadedmetadata', function() {
+          console.log(videoElement.duration);
+        });
+    }
+    function moveVideo(timeInSeconds){
+      console.log(timeInSeconds)
+      $('#video')[0].currentTime = timeInSeconds
+    }
+    function upload(){
+      var input = document.querySelector('input[type="file"]')
+      var data = new FormData()
+      data.append('file', input.files[0])
+      data.append('user', 'hubot')
+
+      fetch('/recieve', {
+      method: 'POST',
+      body: data
+      }) .then(
+        (data) => {
+          console.log(data)
+          return data.json()
+        }
+      ).then(function (results) {
+        results['predictions'].forEach(function(item) {
+          var timeFormat = item['gameTime'].split('-')[1]
+          const minutes = parseInt(timeFormat.split(':')[0])
+          const seconds = parseInt(timeFormat.split(':')[1])
+          var timeInSeconds = 60*minutes+seconds;
+          $('#list').append(`<li onclick="moveVideo(${timeInSeconds})">${timeFormat} - ${item["label"]}</li>`);                                              
+        }); 
+      });;
+    }
+    </script>
 </html>
