@@ -28,10 +28,9 @@ def initialize_model(args):
     else:
         checkpoint = torch.load(os.path.join("models", args.model_name, "model.pth.tar"))
     model.load_state_dict(checkpoint['state_dict'])
-    return model
+    return dataset, model
 
-def run_test(args, model):
-    dataset_Test = SoccerNetClipsTesting(path=args.video_path, features=args.features, framerate=args.framerate, chunk_size=args.chunk_size*args.framerate, receptive_field=args.receptive_field*args.framerate)
+def run_test(args, model, dataset_Test):
     test_loader = torch.utils.data.DataLoader(dataset_Test,
         batch_size=1, shuffle=False,
         num_workers=1, pin_memory=True)

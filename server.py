@@ -20,6 +20,6 @@ def recieve():
         f.save('video.mp4')
         if args.CPU:
             print('prediction is done on CPU')
-        model = initialize_model(args) 
-        json_data = run_test(args, model)
+        dataset, model = initialize_model(args) 
+        json_data = run_test(args, model, dataset)
         return json_data
