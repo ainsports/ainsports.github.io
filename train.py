@@ -54,4 +54,5 @@ def test(dataloader,model, model_name, save_predictions=False, cpu = False):
     #Save the predictions
     # for i in np.arange(17):
     #     visualize(detections_numpy, segmentation_numpy,i)
+    print(json_data)
     return json_data
