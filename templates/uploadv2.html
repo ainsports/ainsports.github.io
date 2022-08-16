@@ -51,10 +51,7 @@
           <button class="btn btn-secondary" id="addVideosBtn">Add Videos <i class="fa fa-camera"></i> </button>
         </div>
         <div class="col-md-12">
-          <div class="video-list">
-            <ul>
-    
-            </ul>
+          <div class="video-frame">
           </div>
         </div>
       </div>
@@ -72,10 +69,9 @@
     document.getElementById('addVideosInput').onchange = e => {
         const file = e.target.files[0];
         const url = URL.createObjectURL(file);
-        const li = ` <li> <video controls="controls" src=" ${url} " type="video/mp4" width="400px" height="200px"></video>
-            <span><i class="fa fa-trash"></i></span>
-        </li>`
-        $('.video-list ul').append(li);
+        const video = `<video controls="controls" src=" ${url} " type="video/mp4" width="400px" height="200px"></video>
+            <span><i class="fa fa-trash"></i></span>`
+        $('.video-frame').append(video);
         var input = document.querySelector('input[type="file"]')
         var data = new FormData()
         data.append('file', input.files[0])

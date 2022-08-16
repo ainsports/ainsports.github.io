@@ -37,7 +37,7 @@ parser.add_argument('--loglevel',   required=False, type=str,   default='INFO', 
 
 args, unknown = parser.parse_known_args()
 model = None 
-
+print(args.CPU)
 @app.route('/upload')
 def upload_file():
    return render_template('upload.html')
