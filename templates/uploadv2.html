@@ -1,0 +1,92 @@
+<html>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        .photos-list ul,
+.videos-list ul {
+  margin: 0px;
+  padding: 0px;
+}
+
+.photos-list ul li,
+.videos-list ul li {
+  list-style: none;
+  float: left;
+  width: 19%;
+  margin: 5px;
+  position: relative;
+}
+
+.photos-list ul li img,
+.videos-list ul li img {
+  width: 100%;
+  border-radius: 10px;
+  height: 110px;
+}
+
+.photos-list ul li span,
+.videos-list ul li span {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, .5);
+  padding: 5px 10px;
+  cursor: pointer;
+}
+
+.photos-list ul li span svg,
+.videos-list ul li span svg {
+  color: #fff;
+}
+    </style>
+    <div class="container">
+      
+    <!-- Video -->
+    
+      <div class="row">
+        <div class="col-md-4">
+          <input type="file" class="d-none" id="addVideosInput" accept=" video/*">
+          <button class="btn btn-secondary" id="addVideosBtn">Add Videos <i class="fa fa-camera"></i> </button>
+        </div>
+        <div class="col-md-12">
+          <div class="video-list">
+            <ul>
+    
+            </ul>
+          </div>
+        </div>
+      </div>
+    
+    </div>
+
+   <script>
+      $('#addPhotosBtn').click(function() {
+  $(this).parents().find('#addPhotosInput').click();
+});
+    $('#addVideosBtn').click(function() {
+    $(this).parents().find('#addVideosInput').click();
+    });
+
+    document.getElementById('addVideosInput').onchange = e => {
+        const file = e.target.files[0];
+        const url = URL.createObjectURL(file);
+        const li = ` <li> <video controls="controls" src=" ${url} " type="video/mp4" width="400px" height="200px"></video>
+            <span><i class="fa fa-trash"></i></span>
+        </li>`
+        $('.video-list ul').append(li);
+        var input = document.querySelector('input[type="file"]')
+        var data = new FormData()
+        data.append('file', input.files[0])
+        data.append('user', 'hubot')
+
+        fetch('http://104.196.238.168:5000/recieve', {
+        method: 'POST',
+        body: data
+        })
+
+    };
+   </script>
+</html>
+

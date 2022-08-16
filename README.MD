@@ -32,7 +32,7 @@ pip install scikit-video==1.1.11 tensorflow==2.3.0 imutils opencv-python==3.4.11
 
 Run the code using:
 ```
-python inference/main.py --video_path=<path to your video>
+python main.py --video_path=<path to your video>
 ```
 
 This will produce 17 temporal images of predictions (one per class, only predictions with confidence scores above 0.34) and a json file containing all predictions in <code>inference/outputs</code>.
