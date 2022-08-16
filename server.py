@@ -1,11 +1,12 @@
 from flask import Flask, redirect, url_for, request, render_template, jsonify
 from args import * 
 from run import initialize_model, run_test
+from flask_cors import CORS
 import os 
 
 
 app = Flask(__name__)
-
+CORS(app)
 model = None 
 print(args.CPU)
 
