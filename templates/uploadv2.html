@@ -3,12 +3,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"
-  />
-
-<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
     <style>
     </style>
     <div class="container">
@@ -27,26 +21,10 @@
         </div>
       </div>
     
-      <div class="swiper-container-wrapper swiper-container-wrapper--timeline">
+      <div id="timeline" style="display:inline">
         <!-- Timeline -->
-        <ul class="swiper-pagination-custom">
-          <li class='swiper-pagination-switch first active'><span class='switch-title'>1911</span></li>
-          <li class='swiper-pagination-switch'><span class='switch-title'>1970</span></li>
-          <li class='swiper-pagination-switch'><span class='switch-title'>2021</span></li>
-          <li class='swiper-pagination-switch last'><span class='switch-title'>3000</span></li>
+        <ul id="list">
         </ul>
-        <!-- Progressbar -->
-        <div class="swiper-pagination swiper-pagination-progressbar swiper-pagination-horizontal"></div>
-        <!-- Swiper -->
-        <div class="swiper swiper-container swiper-container--timeline">
-          <div class="swiper-wrapper">
-            <!-- Slides -->
-            <div class="swiper-slide"><span class="title">Swiper Timeline Progressbar</span></div>
-            <div class="swiper-slide"><span class="title">Title 2</span></div>
-            <div class="swiper-slide"><span class="title">Title 3</span></div>
-            <div class="swiper-slide"><span class="title">Title 4</span></div>
-          </div>
-        </div>
       </div>
     </div>
 
@@ -68,6 +46,10 @@
           console.log(videoElement.duration);
         });
     }
+    function moveVideo(timeInSeconds){
+      console.log(timeInSeconds)
+      $('#video')[0].currentTime = timeInSeconds
+    }
     function upload(){
       var input = document.querySelector('input[type="file"]')
       var data = new FormData()
@@ -83,52 +65,15 @@
           return data.json()
         }
       ).then(function (results) {
-          console.log('GET response:');
-          console.log(results);
-          console.log(results['predictions'])
-          results.forEach(function(item) {
-            console.log(item['gameTime'].split('-')[-1].strip().split(':'));
-          }); 
+        results['predictions'].forEach(function(item) {
+          var timeFormat = item['gameTime'].split('-')[1]
+          const minutes = parseInt(timeFormat.split(':')[0])
+          const seconds = parseInt(timeFormat.split(':')[1])
+          var timeInSeconds = 60*minutes+seconds;
+          $('#list').append(`<li onclick="moveVideo(${timeInSeconds})">${timeFormat} - ${item["label"]}</li>`);                                              
+        }); 
       });;
     }
-    $(document).ready(function () {
-    var mySwiper = new Swiper(".swiper", {
-      autoHeight: true,
-      autoplay: {
-        delay: 5000,
-        disableOnInteraction: false
-      },
-      speed: 500,
-      direction: "horizontal",
-      navigation: {
-        nextEl: ".swiper-button-next",
-        prevEl: ".swiper-button-prev"
-      },
-      pagination: {
-        el: ".swiper-pagination",
-        type: "progressbar"
-      },
-      loop: false,
-      effect: "slide",
-      spaceBetween: 30,
-      on: {
-        init: function () {
-          $(".swiper-pagination-custom .swiper-pagination-switch").removeClass("active");
-          $(".swiper-pagination-custom .swiper-pagination-switch").eq(0).addClass("active");
-        },
-        slideChangeTransitionStart: function () {
-          $(".swiper-pagination-custom .swiper-pagination-switch").removeClass("active");
-          $(".swiper-pagination-custom .swiper-pagination-switch").eq(mySwiper.realIndex).addClass("active");
-        }
-      }
-    });
-    $(".swiper-pagination-custom .swiper-pagination-switch").click(function () {
-      mySwiper.slideTo($(this).index());
-      $(".swiper-pagination-custom .swiper-pagination-switch").removeClass("active");
-      $(this).addClass("active");
-    });
-});
-
     </script>
 </html>
 
