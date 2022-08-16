@@ -42,9 +42,8 @@
       data.append('file', input.files[0])
       data.append('user', 'hubot')
 
-      fetch('http://104.196.238.168:5000/recieve', {
+      fetch('/recieve', {
       method: 'POST',
-      mode: 'no-cors',
       body: data
       }) .then(
         (data) => {
