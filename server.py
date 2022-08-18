@@ -3,7 +3,8 @@ from args import *
 from run import initialize_model, run_test
 from flask_cors import CORS
 import os 
-
+import cv2
+import time 
 
 app = Flask(__name__)
 CORS(app)
@@ -20,8 +21,14 @@ def recieve():
         print("recieved POST")
         f = request.files['file']
         f.save('video.mp4')
+        cap = cv2.VideoCapture("video.mp4")
+        length = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+        print("The number of frames is ", length )
+        start_time = time.time()
         if args.CPU:
             print('prediction is done on CPU')
         dataset, model = initialize_model(args) 
         json_data = run_test(args, model, dataset)
+        end_time = time.time()
+        print("Total time is ", end_time - start_time)
         return json_data
