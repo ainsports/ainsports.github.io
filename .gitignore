@@ -130,3 +130,5 @@ dmypy.json
 *.mkv
 outputs/
 *.mp4
+vendor/*
+_site/*
