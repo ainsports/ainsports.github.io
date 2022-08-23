@@ -48,11 +48,11 @@ More information on CALF, including its implementation, is available on [https:/
 
 ### Project Developers
 
-- Zaid AlYafeai
+- [Zaid Alyafeai](https://github.com/zaidalyafeai/)
 - [Silvio Giancola](https://github.com/silviogiancola/)
-- Anthony Cioppa
-- Abdullah Hamdi
-- Hamzah Luqman
+- [Anthony Cioppa](https://github.com/cioppaanthony/)
+- [Abdullah Hamdi](https://github.com/ajhamdi/)
+- [Hamzah Luqman](https://github.com/Hamzah-Luqman/)
 
 
 
