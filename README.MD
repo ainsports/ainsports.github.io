@@ -36,3 +36,26 @@ python main.py --video_path=<path to your video>
 ```
 
 This will produce 17 temporal images of predictions (one per class, only predictions with confidence scores above 0.34) and a json file containing all predictions in <code>inference/outputs</code>.
+
+## Run back end server
+
+First, install the Flack libraries:
+
+```bash
+pip install flask flask-cors
+```
+
+Then run the Flask server:
+
+```bash
+flask --app server run
+```
+
+Send an API request:
+
+```
+curl \
+-F "file=@video_224_25fps_000.mp4" \
+-F "user=hubot" \
+http://127.0.0.1:5000/recieve 
+```
