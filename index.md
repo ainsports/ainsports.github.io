@@ -32,7 +32,17 @@ More information on CALF, including its implementation, is available on [https:/
     <img src="https://github.com/zaidalyafeai/Ain-Sports/raw/main/img/Abstract-CALF.png" width="480">
 </p>
 
+### Test Sample 
 
+<html>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <div id="a-placeholder"></div>
+    <script>
+        $(function(){
+        $("#a-placeholder").load("sample.html");
+        });
+    </script>
+</html>
 
 ### Live Demo 
 <html>
