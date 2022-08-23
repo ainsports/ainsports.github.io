@@ -1,3 +1,7 @@
+## Front-end Ain Sports website
+
+The front-end website is available on [https://zaidalyafeai.github.io/Ain-Sports/](https://zaidalyafeai.github.io/Ain-Sports/)
+
 ## Run the website locally 
 
 ### Install Rbenv 
