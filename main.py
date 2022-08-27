@@ -48,7 +48,7 @@ def main(args):
 
     model.load_state_dict(checkpoint['state_dict'])
 
-    test(test_loader, model=model, model_name=args.model_name, save_predictions=True, cpu = args.CPU)
+    test(test_loader, model=model, model_name=args.model_name, save_predictions=True, cpu = args.CPU, video_path = args.video_path)
 
 
 
