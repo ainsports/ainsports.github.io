@@ -24,7 +24,7 @@ conda create -n highlight python=3.8
 conda activate highlight
 conda install pytorch=1.6 torchvision=0.7 cudatoolkit=10.1 -c pytorch
 apt-get install ffmpeg
-pip install scikit-video==1.1.11 tensorflow==2.3.0 imutils opencv-python==3.4.11.41 SoccerNet moviepy==1.0.3 scikit-learn==0.24.2 ffmpy flask
+pip install scikit-video==1.1.11 tensorflow==2.3.0 imutils opencv-python==3.4.11.41 SoccerNet moviepy==1.0.3 scikit-learn==0.24.2 ffmpy flask ffmpeg-python
 ```
 
 
