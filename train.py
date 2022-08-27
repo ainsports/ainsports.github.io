@@ -8,6 +8,7 @@ import math
 from preprocessing import batch2long, timestamps2long, visualize, NMS
 from json_io import predictions2json
 from flask import jsonify
+from video import generateSummaryVideo
 
 def test(dataloader,model, model_name, save_predictions=False, cpu = False):
 
@@ -56,4 +57,7 @@ def test(dataloader,model, model_name, save_predictions=False, cpu = False):
     # for i in np.arange(17):
     #     visualize(detections_numpy, segmentation_numpy,i)
     print(json_data)
+    if video_path != None:
+        generateSummaryVideo(video_path)
+
     return jsonify(json_data)
