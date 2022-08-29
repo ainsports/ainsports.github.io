@@ -33,3 +33,6 @@ def recieve():
         end_time = time.time()
         print("Total time is ", end_time - start_time)
         return json_data
+
+if __name__ == "__main__":
+  app.run(host = "0.0.0.0")
