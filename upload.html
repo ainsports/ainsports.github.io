@@ -29,7 +29,7 @@
     
       <div id="timeline" style="display:inline">
         <!-- Timeline -->
-        <ul id="list">
+        <ul id="listPred">
         </ul>
       </div>
     </div>
@@ -109,7 +109,7 @@
       }
     }) .then(function (results) {
         console.log(results)
-        $('#list').html("")
+        $('#listPred').html("")
         enable()
         currTime = 0
         clearInterval(timer) 
@@ -118,7 +118,7 @@
           const minutes = parseInt(timeFormat.split(':')[0])
           const seconds = parseInt(timeFormat.split(':')[1])
           var timeInSeconds = 60*minutes+seconds;
-          $('#list').append(`<li onclick="moveVideo(${timeInSeconds})">${timeFormat} - ${item["label"]}</li>`);                                              
+          $('#listPred').append(`<li onclick="moveVideo(${timeInSeconds})">${timeFormat} - ${item["label"]}</li>`);                                              
         }); 
       });
 
