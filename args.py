@@ -28,7 +28,7 @@ parser.add_argument('--patience', required=False, type=int,   default=25,     he
 
 parser.add_argument('--GPU',        required=False, type=int,   default=-1,     help='ID of the GPU to use' )
 parser.add_argument('--max_num_worker',   required=False, type=int,   default=4, help='number of worker to load data')
-parser.add_argument('--CPU',   required=False, action='store_false',  help='Run on CPU only' )
+parser.add_argument('--CPU',   required=False, action='store_true',  help='Run on CPU only' )
 parser.add_argument('--loglevel',   required=False, type=str,   default='INFO', help='logging level')
 
 args, unknown = parser.parse_known_args()
