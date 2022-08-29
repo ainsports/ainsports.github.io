@@ -13,7 +13,7 @@
         <div class="col-4">
           <input type="file" class="d-none" id="addVideosInput" accept=" video/*">
           <button class="btn btn-secondary" id="addVideo">Add Video <i class="fa fa-camera"></i> </button>
-          <button class="btn btn-primary" id="submit" onclick="upload()">Submit</button>
+          <button class="btn btn-primary" id="submit" onclick="upload()" disabled>Submit</button>
         </div>
         <div class="col">
           <div class="progress">
@@ -41,6 +41,7 @@
 
     $('#addVideo').click(function() {
       $(this).parents().find('#addVideosInput').click();
+      $('#listPred').html("")
     });
 
     document.getElementById('addVideosInput').onchange = e => {
@@ -54,8 +55,10 @@
         
         videoElement.addEventListener('loadedmetadata', function() {
           let duration = videoElement.duration
-          endTime = (duration/120)*95000
+          endTime = (duration/120)*9000
           console.log('eat in seconds ', endTime)
+          $("#submit").removeAttr("disabled");
+          $('#submit').removeClass('disabled');
         });
     }
     function moveVideo(timeInSeconds){
@@ -80,7 +83,7 @@
     function updatePrediction(){
       currTime += 1000 
       let valeur = Math.round(currTime/endTime * 100)
-      if (valeur < 100){
+      if (valeur <= 100){
         $('#prediction-bar').css('width', valeur+'%').attr('aria-valuenow', valeur);
         $('#prediction-bar').html(valeur+'%') 
       }
