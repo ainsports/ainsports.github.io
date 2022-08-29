@@ -13,15 +13,13 @@ def createFolder(folderPath):
     if os.path.exists(folderPath) ==  False:
         os.mkdir(folderPath)
 
-def generateSummaryVideo(filepath):
-    secondsBefore = 3
-    secondsAfter = 3
-    input_file_path = 'outputs/Predictions-v2.json'
+def generateSummaryVideo(video_path = 'video.mp4', prediction_file = "outputs/Predictions-v2.json", output_path = "static/media", time_span = 2):
+    secondsBefore = time_span
+    secondsAfter = time_span
+    input_file_path = prediction_file
     predictions = ''
-    #filepath = 'video_224_25fps_002.mp4'
-    fileparts = os.path.basename(filepath)
 
-    mainExpFolder = os.path.join('outputs', os.path.splitext(fileparts)[0])
+    mainExpFolder = output_path
     if os.path.exists(mainExpFolder)  == False :
         os.mkdir(mainExpFolder, 0o755)
     else:
@@ -58,7 +56,7 @@ def generateSummaryVideo(filepath):
             outputFile = os.path.join(mainExpFolder, str(milliseconds) +".mp4")
             allFiles.write("file '"+str(milliseconds) +".mp4'" + "\n")
             
-            cmd = "ffmpeg  -i "+ str(filepath) + " -ss " + str(startTime) + " -to " + str(endTime) + " -c:v libx264 -crf 30 "+ outputFile
+            cmd = "ffmpeg  -i "+ str(video_path) + " -ss " + str(startTime) + " -to " + str(endTime) + " -c:v libx264 -crf 30 "+ outputFile
             #print(cmd)
             os.system(cmd)
             i = i + 1
@@ -74,6 +72,4 @@ def generateSummaryVideo(filepath):
            #print(cmd)
            os.system(cmd)
 
-    ##    
-
-#generateSummaryVideo()
+    return "https://ainsports.eu.ngrok.io/"+outputSummaryFile

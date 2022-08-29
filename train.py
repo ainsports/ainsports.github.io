@@ -10,7 +10,7 @@ from json_io import predictions2json
 from flask import jsonify
 from video import generateSummaryVideo
 
-def test(dataloader,model, model_name, save_predictions=False, cpu = False, video_path = None):
+def test(dataloader,model, cpu = False, video_path = None):
 
     spotting_predictions = list()
     segmentation_predictions = list()
@@ -53,11 +53,6 @@ def test(dataloader,model, model_name, save_predictions=False, cpu = False, vide
     # Save the predictions to the json format
     json_data = predictions2json(detections_numpy[0],"outputs/", model.framerate)
 
-    #Save the predictions
-    # for i in np.arange(17):
-    #     visualize(detections_numpy, segmentation_numpy,i)
-    print(json_data)
-    if video_path != None:
-        generateSummaryVideo(video_path)
-
+    video_url = generateSummaryVideo(video_path)
+    json_data['video_url'] = video_url
     return jsonify(json_data)

@@ -34,5 +34,9 @@ def recieve():
         print("Total time is ", end_time - start_time)
         return json_data
 
+@app.route('/static/<file>')
+def video(file):
+   return render_template('stream.html',file=file)
+
 if __name__ == "__main__":
   app.run(host = "0.0.0.0")
