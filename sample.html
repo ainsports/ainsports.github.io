@@ -11,10 +11,10 @@
           
       <div class="row">
         <div class="col-8">
-          <p> A sample video that runs at 25 frames per second. We show pre-calculated predictions for quick testing. </p>
+          <p> A sample video that runs at 25 frames per second. We show pre-calculated predictions for quick testing. Click on the predicted time to show its corrosponding time in the video </p>
           <video width = "400" id = "video-sample" src = "https://raw.githubusercontent.com/zaidalyafeai/Ain-Sports/main/video_224_25fps_001.mp4" controls ></video>
           <br>
-          <label for="customRange1" class="form-label">Confidence Score: 0.5</label>
+          <label for="customRange1" class="form-label">Confidence Threshold: 0.5</label>
           <input type="range" min="1" max="10" value="5" class="form-range" id="myRange-sample"> 
           <button class="btn btn-primary" onclick="Predict()">Predict</button>
 
@@ -42,13 +42,9 @@
 
     slider.onchange  = function() {
         thresh = parseFloat(this.value)/10;
-        $(".form-label").html(`Confidence Score: ${thresh}`)
+        $(".form-label").html(`Confidence Threshold: ${thresh}`)
     };
 
-    function moveVideo(timeInSeconds){
-      console.log(timeInSeconds)
-      $('#video-sample')[0].currentTime = timeInSeconds
-    }
     function Predict(){
         $('#list-sample').html("")  
         pred1["predictions"].forEach(function(item) {
@@ -58,7 +54,7 @@
             const seconds = parseInt(timeFormat.split(':')[1])
             var timeInSeconds = 60*minutes+seconds;
             if (confidenceScore > thresh)
-              $('#list-sample').append(`<li onclick="moveVideo(${timeInSeconds})">${timeFormat} - ${item["label"]}</li>`);                                              
+              $('#list-sample').append(`<li onclick="moveVideo(${timeInSeconds}, '#video-sample')">${timeFormat} - ${item["label"]}</li>`);                                              
         }); 
     }
     </script>

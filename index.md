@@ -1,5 +1,3 @@
-## Welcome to Ain Sports
-
 ### Action Spotting for Soccer Highlight Generation
 
 This project deploys Action Spotting algorithms to localize the main actions of soccer games.

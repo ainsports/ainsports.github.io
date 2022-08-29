@@ -6,32 +6,49 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
     <style>
+      li { cursor: pointer; }
+      li:hover {
+        color: rgb(41, 119, 255);
+        
+      }
     </style>
     <div class="container">
-          
-      <div class="row">
-        <div class="col-4">
+      <p>Upload a video for prediction. A 2-mins video should take around 10 seconds to run in the server. </p>
+
+      <div class = "row">
+        
+        <div class = "col-4">
           <input type="file" class="d-none" id="addVideosInput" accept=" video/*">
-          <button class="btn btn-secondary" id="addVideo">Add Video <i class="fa fa-camera"></i> </button>
+          <button class="btn btn-success" id="addVideo"> Add Video </button>
           <button class="btn btn-primary" id="submit" onclick="upload()" disabled>Submit</button>
+          <span id = "status"></span>
         </div>
-        <div class="col">
+        <div class = "col-8">
           <div class="progress">
-            <div id = "upload-bar" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+            <div id = "upload-bar" class="progress-bar progress-bar-striped bg-info" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
           </div>
           <div class = "progress">
-            <div id = "prediction-bar" class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+            <div id = "prediction-bar" class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
           </div>
+        </div>
+      </div>   
+      <div class="row">
+        <div class="col-8">
+          
           <div class="video-frame">
           </div>
         </div>
+        <div class="col-mid-4">
+          <div id="timeline" style="display:inline">
+            <!-- Timeline -->
+            <ul id="listPred">
+            </ul>
+          </div>
+          
+        </div>
       </div>
     
-      <div id="timeline" style="display:inline">
-        <!-- Timeline -->
-        <ul id="listPred">
-        </ul>
-      </div>
+      
     </div>
 
    <script>
@@ -55,15 +72,14 @@
         
         videoElement.addEventListener('loadedmetadata', function() {
           let duration = videoElement.duration
-          endTime = (duration/120)*10000
+          endTime = (duration/120)*9000
           console.log('eat in seconds ', endTime)
           $("#submit").removeAttr("disabled");
           $('#submit').removeClass('disabled');
         });
     }
-    function moveVideo(timeInSeconds){
-      console.log(timeInSeconds)
-      $('#video')[0].currentTime = timeInSeconds
+    function moveVideo(timeInSeconds, _id = "#video"){
+      $(_id)[0].currentTime = timeInSeconds
     }
 
     function enable(){
@@ -86,13 +102,15 @@
       if (valeur <= 100){
         $('#prediction-bar').css('width', valeur+'%').attr('aria-valuenow', valeur);
         $('#prediction-bar').html(valeur+'%') 
+      }else{
+        $('#status').html("");
       }
     }
 
     function upload(){
       currTime = 0 
       disable()
-
+      $('#status').html("Uploading ...");
       var input = document.querySelector('input[type="file"]')
       var data = new FormData()
       data.append('file', input.files[0])
@@ -107,11 +125,13 @@
         $('#upload-bar').html(valeur+'%')
         if (valeur == 100){
           timer = setInterval(updatePrediction, 1000);
+          $('#status').html("Predicting ...");
         }  
       }
     }) .then(function (results) {
         console.log(results)
         $('#listPred').html("")
+        $('#status').html("");
         enable()
         currTime = 0
         clearInterval(timer) 
@@ -123,26 +143,6 @@
           $('#listPred').append(`<li onclick="moveVideo(${timeInSeconds})">${timeFormat} - ${item["label"]}</li>`);                                              
         }); 
       });
-
-      // fetch('http://34.105.119.167:5000/recieve', {
-      // method: 'POST',
-      // body: data
-      // }) .then(
-      //   (data) => {
-      //     console.log(data)
-      //     return data.json()
-      //   }
-      // ).then(function (results) {
-      //   $('#list').html("")
-      //   enable()
-      //   results['predictions'].forEach(function(item) {
-      //     var timeFormat = item['gameTime'].split('-')[1]
-      //     const minutes = parseInt(timeFormat.split(':')[0])
-      //     const seconds = parseInt(timeFormat.split(':')[1])
-      //     var timeInSeconds = 60*minutes+seconds;
-      //     $('#list').append(`<li onclick="moveVideo(${timeInSeconds})">${timeFormat} - ${item["label"]}</li>`);                                              
-      //   }); 
-      // });
     }
     </script>
 </html>
