@@ -55,7 +55,7 @@
         
         videoElement.addEventListener('loadedmetadata', function() {
           let duration = videoElement.duration
-          endTime = (duration/120)*9000
+          endTime = (duration/120)*10000
           console.log('eat in seconds ', endTime)
           $("#submit").removeAttr("disabled");
           $('#submit').removeClass('disabled');
@@ -97,10 +97,9 @@
       var data = new FormData()
       data.append('file', input.files[0])
       data.append('user', 'hubot')
-      
       axios.request({
       method: "post", 
-      url: "https://79e2-34-91-72-183.eu.ngrok.io/recieve", 
+      url: "https://3c81-34-90-105-96.eu.ngrok.io/recieve", 
       data: data, 
       onUploadProgress: (p) => {
         let valeur = Math.round((p.loaded / p.total)* 100)
