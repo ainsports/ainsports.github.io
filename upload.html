@@ -30,6 +30,9 @@
           <div class = "progress">
             <div id = "prediction-bar" class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
           </div>
+          <div class = "progress">
+            <div id = "summary-bar" class="progress-bar progress-bar-striped bg-warning" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">0%</div>
+          </div>
         </div>
       </div>   
       <div class="row">
@@ -37,6 +40,9 @@
           
           <div class="video-frame">
           </div>
+
+          <video width = "400" id = "video-summary" controls ></video>
+
         </div>
         <div class="col-mid-4">
           <div id="timeline" style="display:inline">
@@ -53,15 +59,18 @@
 
    <script>
     var timer;
+    var timerSummary;
+    var currTimeSummary = 0;
     var currTime = 0;  
     var endTime = 1 ; 
-
+    $("#video-summary").hide();
     $('#addVideo').click(function() {
       $(this).parents().find('#addVideosInput').click();
       $('#listPred').html("")
     });
 
     document.getElementById('addVideosInput').onchange = e => {
+       $("#video-summary").hide();
         const file = e.target.files[0];
         const url = URL.createObjectURL(file);
         const video = `<video controls="controls" src=" ${url} " id = "video" type="video/mp4" width="400px" height="200px"></video>
@@ -103,13 +112,27 @@
         $('#prediction-bar').css('width', valeur+'%').attr('aria-valuenow', valeur);
         $('#prediction-bar').html(valeur+'%') 
       }else{
+        $('#status').html("Summarize ... ");
+        timerSummary = setInterval(updateSummary, 1000);
+      }
+    }
+
+    function updateSummary(){
+      currTimeSummary += 1000 
+      let valeur = Math.round(currTimeSummary/18000 * 100)
+      if (valeur <= 100){
+        $('#summary-bar').css('width', valeur+'%').attr('aria-valuenow', valeur);
+        $('#summary-bar').html(valeur+'%') 
+      }else{
         $('#status').html("");
+        clearInterval(timerSummary)
       }
     }
 
     function upload(){
       currTime = 0 
       disable()
+      $("#video-summary").hide();
       $('#status').html("Uploading ...");
       var input = document.querySelector('input[type="file"]')
       var data = new FormData()
@@ -141,7 +164,10 @@
           const seconds = parseInt(timeFormat.split(':')[1])
           var timeInSeconds = 60*minutes+seconds;
           $('#listPred').append(`<li onclick="moveVideo(${timeInSeconds})">${timeFormat} - ${item["label"]}</li>`);                                              
-        }); 
+        });
+        console.log(results.data.video_url)
+        $("#video-summary").show();
+        $('#video-summary').attr('src', results.data.video_url) 
       });
     }
     </script>
