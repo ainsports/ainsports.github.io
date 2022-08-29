@@ -10,7 +10,7 @@ from json_io import predictions2json
 from flask import jsonify
 from video import generateSummaryVideo
 
-def test(dataloader,model, model_name, save_predictions=False, cpu = False):
+def test(dataloader,model, model_name, save_predictions=False, cpu = False, video_path = None):
 
     spotting_predictions = list()
     segmentation_predictions = list()
