@@ -8,7 +8,6 @@ import math
 from preprocessing import batch2long, timestamps2long, visualize, NMS
 from json_io import predictions2json
 from flask import jsonify
-from video import generateSummaryVideo
 
 def test(dataloader,model, cpu = False, video_path = None):
 
@@ -52,7 +51,4 @@ def test(dataloader,model, cpu = False, video_path = None):
 
     # Save the predictions to the json format
     json_data = predictions2json(detections_numpy[0],"outputs/", model.framerate)
-
-    video_url = generateSummaryVideo(video_path)
-    json_data['video_url'] = video_url
     return jsonify(json_data)

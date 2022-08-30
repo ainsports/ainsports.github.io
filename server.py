@@ -1,10 +1,12 @@
 from flask import Flask, redirect, url_for, request, render_template, jsonify
 from args import * 
 from run import initialize_model, run_test
+from video import generateSummaryVideo
 from flask_cors import CORS
 import os 
 import cv2
 import time 
+from flask import jsonify
 
 app = Flask(__name__)
 CORS(app)
@@ -20,7 +22,6 @@ def recieve():
     if request.method == 'POST':
         print("recieved POST")
         f = request.files['file']
-        # print("ok")
         f.save('video.mp4')
         cap = cv2.VideoCapture("video.mp4")
         length = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
@@ -28,11 +29,20 @@ def recieve():
         start_time = time.time()
         if args.CPU:
             print('prediction is done on CPU')
-        # model = initialize_model(args) 
+        thresh = float(request.files['thresh'])
+        print('prediction with threshold ', thresh) 
         json_data = run_test(args, model)
         end_time = time.time()
         print("Total time is ", end_time - start_time)
         return json_data
+
+
+@app.route('/summarize', methods = ['GET', 'POST'])
+def summarize():
+    if request.method == 'POST':
+        thresh = float(request.files['thresh'])
+        video_url = generateSummaryVideo(thresh = thresh)
+        return jsonify({'video_url':video_url})
 
 @app.route('/static/<file>')
 def video(file):

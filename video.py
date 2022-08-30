@@ -13,7 +13,8 @@ def createFolder(folderPath):
     if os.path.exists(folderPath) ==  False:
         os.mkdir(folderPath)
 
-def generateSummaryVideo(video_path = 'video.mp4', prediction_file = "outputs/Predictions-v2.json", output_path = "static/media", time_span = 2):
+def generateSummaryVideo(video_path = 'video.mp4', prediction_file = "outputs/Predictions-v2.json",
+                         output_path = "static/media", time_span = 2, thresh = 0.5):
     secondsBefore = time_span
     secondsAfter = time_span
     input_file_path = prediction_file
@@ -38,6 +39,8 @@ def generateSummaryVideo(video_path = 'video.mp4', prediction_file = "outputs/Pr
         predictions_file = json.load(input_file) 
         predictions = predictions_file['predictions']
         for action in predictions:
+            if float(action['confidence']) < thresh:
+                continue
             actionType = action['label']
             actionTime = action['gameTime'].replace('1 - ','') 
             milliseconds = int(action['position'])
