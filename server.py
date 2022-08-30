@@ -21,6 +21,7 @@ def upload_file():
 def recieve():
     if request.method == 'POST':
         print("recieved POST")
+        print(request.form)
         f = request.files['file']
         f.save('video.mp4')
         cap = cv2.VideoCapture("video.mp4")
@@ -29,7 +30,8 @@ def recieve():
         start_time = time.time()
         if args.CPU:
             print('prediction is done on CPU')
-        thresh = float(request.files['thresh'])
+        print(request.files)
+        thresh = float(request.form['thresh'])
         print('prediction with threshold ', thresh) 
         json_data = run_test(args, model)
         end_time = time.time()
@@ -40,7 +42,7 @@ def recieve():
 @app.route('/summarize', methods = ['GET', 'POST'])
 def summarize():
     if request.method == 'POST':
-        thresh = float(request.files['thresh'])
+        thresh = float(request.form['thresh'])
         video_url = generateSummaryVideo(thresh = thresh)
         return jsonify({'video_url':video_url})
 
