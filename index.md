@@ -22,7 +22,6 @@ With an algorithm of action spotting, the producer already know when specific ac
 
 The algorithm we deployed originates from [SoccerNet](https://www.soccer-net.org/). In particular we are using [A Context-Aware Loss Function for Action Spotting in Soccer Videos (CALF)](https://openaccess.thecvf.com/content_CVPR_2020/papers/Cioppa_A_Context-Aware_Loss_Function_for_Action_Spotting_in_Soccer_Videos_CVPR_2020_paper.pdf), published at CVPR'20.
 CALF localizes specific actions by learning the temporal context around the action.
-
 More information on CALF, including its implementation, is available on [https://github.com/SoccerNet/sn-spotting](https://github.com/SoccerNet/sn-spotting/tree/main/Benchmarks/CALF).
 
 <p align="center">
