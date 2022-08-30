@@ -59,7 +59,7 @@ def generateSummaryVideo(video_path = 'video.mp4', prediction_file = "outputs/Pr
             outputFile = os.path.join(mainExpFolder, str(milliseconds) +".mp4")
             allFiles.write("file '"+str(milliseconds) +".mp4'" + "\n")
             
-            cmd = "ffmpeg  -i "+ str(video_path) + " -ss " + str(startTime) + " -to " + str(endTime) + " -c:v libx264 -crf 30 "+ outputFile
+            cmd = "ffmpeg -y -i "+ str(video_path) + " -ss " + str(startTime) + " -to " + str(endTime) + " -c:v libx264 -crf 30 "+ outputFile
             #print(cmd)
             os.system(cmd)
             i = i + 1
@@ -70,7 +70,7 @@ def generateSummaryVideo(video_path = 'video.mp4', prediction_file = "outputs/Pr
         if i> 0:
            #outputFile     
            #outputSummaryFile
-           cmd = "ffmpeg -f concat -i " + actionFileNames + " -c copy " + outputSummaryFile
+           cmd = "ffmpeg -y -f concat -i " + actionFileNames + " -c copy " + outputSummaryFile
            
            #print(cmd)
            os.system(cmd)
