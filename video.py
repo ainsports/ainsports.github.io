@@ -40,6 +40,7 @@ def generateSummaryVideo(video_path = 'video.mp4', prediction_file = "outputs/Pr
         predictions = predictions_file['predictions']
         for action in predictions:
             if float(action['confidence']) < thresh:
+                print('confidence is low ', action['confidence'])
                 continue
             actionType = action['label']
             actionTime = action['gameTime'].replace('1 - ','') 
