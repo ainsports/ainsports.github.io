@@ -52,7 +52,7 @@ def generateSummaryVideo(video_path = 'video.mp4', prediction_file = "outputs/Pr
             #####
             outputFile = os.path.join(output_path, str(milliseconds) +".mp4")
             allFiles.write("file '"+str(milliseconds) +".mp4'" + "\n")
-            allFiles.write("file 'outputs/AinSportClip.mp4'" + "\n")
+            allFiles.write("file 'AinSportClip.mp4'" + "\n")
             
             cmd = "ffmpeg -y -i "+ str(video_path) + " -ss " + str(startTime) + " -to " + str(endTime) + " -c:v libx264 -crf 30 "+ outputFile
             #print(cmd)
