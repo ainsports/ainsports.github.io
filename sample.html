@@ -12,7 +12,7 @@
       <div class="row">
         <div class="col-8">
           <p> A sample video that runs at 25 frames per second. We show pre-calculated predictions for quick testing. Click on the predicted time to show its corrosponding time in the video </p>
-          <video width = "400" id = "video-sample" src = "https://raw.githubusercontent.com/zaidalyafeai/Ain-Sports/main/video_224_25fps_001.mp4" controls ></video>
+          <video width = "400" id = "video-sample" src = "https://raw.githubusercontent.com/zaidalyafeai/Ain-Sports/main/2015-02-21 - 18-00 Chelsea 1 - 1 Burnley_2_017.mp4" controls ></video>
           <br>
           <label id = "range-sample" for="customRange1" class="form-label">Confidence Threshold: 0.5</label>
           <input type="range" min="1" max="10" value="5" class="form-range" id="myRange-sample"> 
@@ -39,7 +39,7 @@
     var endTime = 1 ;
     var threshSample = 0.5;  
     pred1 = {'predictions': [{'gameTime': '1 - 0:27', 'label': 'Ball out of play', 'position': '27000', 'half': '1', 'confidence': '0.6732720732688904'}, {'gameTime': '1 - 0:33', 'label': 'Throw-in', 'position': '33500', 'half': '1', 'confidence': '0.8119053840637207'}, {'gameTime': '1 - 0:37', 'label': 'Ball out of play', 'position': '37500', 'half': '1', 'confidence': '0.7463433146476746'}, {'gameTime': '1 - 0:48', 'label': 'Throw-in', 'position': '48000', 'half': '1', 'confidence': '0.5921332836151123'}, {'gameTime': '1 - 0:53', 'label': 'Foul', 'position': '53500', 'half': '1', 'confidence': '0.6333979964256287'}, {'gameTime': '1 - 0:57', 'label': 'Red card', 'position': '57000', 'half': '1', 'confidence': '0.6659376621246338'}, {'gameTime': '1 - 1:3', 'label': 'Yellow card', 'position': '63000', 'half': '1', 'confidence': '0.2537168562412262'}, {'gameTime': '1 - 1:11', 'label': 'Red card', 'position': '71000', 'half': '1', 'confidence': '0.0938313752412796'}, {'gameTime': '1 - 1:22', 'label': 'Yellow card', 'position': '82000', 'half': '1', 'confidence': '0.12246984243392944'}, {'gameTime': '1 - 1:35', 'label': 'Yellow card', 'position': '95000', 'half': '1', 'confidence': '0.04180100932717323'}]}
-
+    pred2 = {'predictions': [{'gameTime': '1 - 0:27', 'label': 'Shots off target', 'position': '27000', 'half': '1', 'confidence': '0.3350788354873657'}, {'gameTime': '1 - 0:28', 'label': 'Corner', 'position': '28000', 'half': '1', 'confidence': '0.7684494853019714'}, {'gameTime': '1 - 0:32', 'label': 'Shots on target', 'position': '32500', 'half': '1', 'confidence': '0.703639566898346'}, {'gameTime': '1 - 0:35', 'label': 'Ball out of play', 'position': '35500', 'half': '1', 'confidence': '0.8354644775390625'}, {'gameTime': '1 - 0:57', 'label': 'Substitution', 'position': '57500', 'half': '1', 'confidence': '0.14826278388500214'}, {'gameTime': '1 - 1:5', 'label': 'Corner', 'position': '65500', 'half': '1', 'confidence': '0.23556280136108398'}, {'gameTime': '1 - 1:17', 'label': 'Corner', 'position': '77500', 'half': '1', 'confidence': '0.8609892725944519'}, {'gameTime': '1 - 1:18', 'label': 'Shots on target', 'position': '78000', 'half': '1', 'confidence': '0.7955199480056763'}, {'gameTime': '1 - 1:19', 'label': 'Goal', 'position': '79500', 'half': '1', 'confidence': '0.686272144317627'}]}
     slider.onchange  = function() {
       threshSample = parseFloat(this.value)/10;
         $("#range-sample").html(`Confidence Threshold: ${threshSample}`)
@@ -47,7 +47,7 @@
 
     function Predict(){
         $('#list-sample').html("")  
-        pred1["predictions"].forEach(function(item) {
+        pred2["predictions"].forEach(function(item) {
             var confidenceScore = parseFloat(item['confidence'])
             var timeFormat = item['gameTime'].split('-')[1]
             const minutes = parseInt(timeFormat.split(':')[0])
