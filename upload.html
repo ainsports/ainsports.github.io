@@ -72,12 +72,14 @@
    <script>
     var timer;
     var timerSummary;
-    var currTimeSummary = 0;
-    var currTime = 0;  
-    var endTime = 1 ; 
+    var currTimeSummary;
+    var currTime;  
+    var endTime; 
     var currData; 
     var slider = document.getElementById('myRange');
-    var thresh = 0.5;  
+    var thresh = 0.5;
+
+    resetInterface();
 
     slider.onchange  = function() {
         thresh = parseFloat(this.value)/10;
@@ -87,31 +89,45 @@
         }
     };
 
-    $("#video-summary").hide();
-    $("#generate").hide();
-
     $('#addVideo').click(function() {
       $(this).parents().find('#addVideosInput').click();
       $('#listPred').html("")
     });
 
+    function resetInterface(){
+      currTimeSummary = 0;
+      currTime = 0;  
+      currData = undefined;
+      $('#status').html("");
+      $("#video-summary").hide();
+      $("#generate").hide();
+      clearInterval(timer);
+      clearInterval(timerSummary);
+      valeur = 0;
+      $('#prediction-bar').css('width', valeur+'%').attr('aria-valuenow', valeur);
+      $('#prediction-bar').html(valeur+'%')
+      $('#upload-bar').css('width', valeur+'%').attr('aria-valuenow', valeur);
+      $('#upload-bar').html(valeur+'%')  
+    }
+
     document.getElementById('addVideosInput').onchange = e => {
-       $("#video-summary").hide();
-        const file = e.target.files[0];
-        const url = URL.createObjectURL(file);
-        const video = `<video controls="controls" src=" ${url} " id = "video" type="video/mp4" width="400px" height="200px"></video>
-            <span><i class="fa fa-trash"></i></span>`
-        $('.video-frame').html(video);
-        var videoElement = document.getElementById("video")
-        var duration = videoElement.duration;
-        
-        videoElement.addEventListener('loadedmetadata', function() {
-          let duration = videoElement.duration
-          endTime = (duration/120)*9000
-          console.log('eat in seconds ', endTime)
-          $("#submit").removeAttr("disabled");
-          $('#submit').removeClass('disabled');
-        });
+      resetInterface();
+      const file = e.target.files[0];
+      const url = URL.createObjectURL(file);
+      const video = `<video controls="controls" src=" ${url} " id = "video" type="video/mp4" width="400px" height="200px"></video>
+          <span><i class="fa fa-trash"></i></span>`
+      $('.video-frame').html(video);
+
+      var videoElement = document.getElementById("video")
+      var duration = videoElement.duration;
+      
+      videoElement.addEventListener('loadedmetadata', function() {
+        let duration = videoElement.duration
+        endTime = (duration/120)*9000
+        console.log('eat in seconds ', endTime)
+        $("#submit").removeAttr("disabled");
+        $('#submit').removeClass('disabled');
+      });
     }
     function moveVideo(timeInSeconds, _id = "#video"){
       $(_id)[0].currentTime = timeInSeconds
@@ -122,6 +138,8 @@
       $('#submit').removeClass('disabled');
       $("#addVideo").removeAttr("disabled");
       $('#addVideo').removeClass('disabled');
+      $("#generate").removeAttr("disabled");
+      $('#generate').removeClass('disabled');
     }
 
     function disable(){
@@ -129,6 +147,8 @@
       $('#submit').addClass('disabled');
       $("#addVideo").attr("disabled", true);
       $('#addVideo').addClass('disabled');
+      $("#generate").attr("disabled", true);
+      $('#generate').addClass('disabled');
     }
 
     function updatePrediction(){
@@ -138,6 +158,8 @@
         $('#prediction-bar').css('width', valeur+'%').attr('aria-valuenow', valeur);
         $('#prediction-bar').html(valeur+'%') 
       }else{
+        clearInterval(timer)
+        currTime = 0;
       }
     }
 
@@ -207,11 +229,11 @@
     }
 
     function generateSummary(){
-      $("#generate").attr("disabled", true);
-      $('#generate').addClass('disabled');
+      disable();
+
       $('#status').html("Summarize ... ");
 
-      timerSummary = setInterval(updateSummary, 1000)
+      // timerSummary = setInterval(updateSummary, 1000)
       var data = new FormData()
       var slider = document.getElementById('myRange-sample');
       thresh = parseFloat(slider.value)/10;
@@ -224,8 +246,8 @@
     }) .then(function (results) {
         $("#video-summary").show();
         $('#video-summary').attr('src', results.data.video_url) 
-        $("#generate").removeAttr("disabled");
-        $('#generate').removeClass('disabled');
+        $('#status').html("");
+        enable();
       });
     }
     </script>
