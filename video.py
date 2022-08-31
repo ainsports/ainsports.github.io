@@ -20,19 +20,12 @@ def generateSummaryVideo(video_path = 'video.mp4', prediction_file = "outputs/Pr
     input_file_path = prediction_file
     predictions = ''
 
-    mainExpFolder = output_path
-    if os.path.exists(mainExpFolder)  == False :
-        os.mkdir(mainExpFolder, 0o755)
-    else:
-        shutil.rmtree(mainExpFolder)
-        os.mkdir(mainExpFolder, 0o755)
-
-    outputSummaryFile = os.path.join(mainExpFolder,'summary.mp4')
+    outputSummaryFile = os.path.join(output_path,'summary.mp4')
     ## read from save file
     
     f = open(input_file_path)
     selectFilter = ''
-    actionFileNames = os.path.join(mainExpFolder,'Filename.txt')
+    actionFileNames = os.path.join(output_path,'Filename.txt')
     allFiles = open(actionFileNames, 'w')
     i = 1
     with open(input_file_path, 'r') as input_file:
@@ -57,7 +50,7 @@ def generateSummaryVideo(video_path = 'video.mp4', prediction_file = "outputs/Pr
             sec_after, mints_after, hours_after = str(sec_after).zfill(2), str(mints_after).zfill(2), str(hours_after).zfill(2) 
             endTime = hours_after + ':'+ mints_after + ':' +  sec_after  
             #####
-            outputFile = os.path.join(mainExpFolder, str(milliseconds) +".mp4")
+            outputFile = os.path.join(output_path, str(milliseconds) +".mp4")
             allFiles.write("file '"+str(milliseconds) +".mp4'" + "\n")
             
             cmd = "ffmpeg -y -i "+ str(video_path) + " -ss " + str(startTime) + " -to " + str(endTime) + " -c:v libx264 -crf 30 "+ outputFile

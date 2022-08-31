@@ -43,7 +43,7 @@ def recieve():
 def summarize():
     if request.method == 'POST':
         thresh = float(request.form['thresh'])
-        print('summarizing with ', )
+        print('summarizing with ', thresh)
         video_url = generateSummaryVideo(thresh = thresh)
         return jsonify({'video_url':video_url})
 
