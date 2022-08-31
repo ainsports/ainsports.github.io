@@ -185,9 +185,8 @@
       var data = new FormData()
       data.append('file', input.files[0])
       var slider = document.getElementById('myRange-sample');
-      thresh = parseFloat(slider.value)/10;
       console.log(thresh)
-      data.append('thresh', "0.5")
+      data.append('thresh', thresh)
       console.log(data)
       axios.request({
       method: "post", 
@@ -236,7 +235,6 @@
       // timerSummary = setInterval(updateSummary, 1000)
       var data = new FormData()
       var slider = document.getElementById('myRange-sample');
-      thresh = parseFloat(slider.value)/10;
       console.log(thresh)
       data.append('thresh', thresh)
       axios.request({
