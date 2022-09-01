@@ -1,4 +1,8 @@
 ### Action Spotting for Soccer Highlight Generation
+<p align="center">
+    <img src="logo.jpg">
+</p>
+
 
 This project deploys Action Spotting algorithms to localize the main actions of soccer games and genrate highlights automatically.
 
