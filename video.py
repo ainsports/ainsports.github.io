@@ -2,6 +2,7 @@ import json
 import ffmpeg
 import os
 import shutil
+import datetime 
 
 def convertMillis(millis):
     seconds=int((millis/1000)%60)
@@ -19,8 +20,8 @@ def generateSummaryVideo(time_stamp, output_path = "static/media", time_span = 2
     video_path = f"video-{time_stamp}.mp4"
     input_file_path = f"outputs/prediction-{time_stamp}.json"
     predictions = ''
-
-    outputSummaryFile = os.path.join(output_path,f'summary-{time_stamp}.mp4')
+    new_time_stamp  = datetime.datetime.now().strftime('%m_%d_%Y_%H_%M_%S')
+    outputSummaryFile = os.path.join(output_path,f'summary-{new_time_stamp}.mp4')
     ## read from save file
     
     f = open(input_file_path)
