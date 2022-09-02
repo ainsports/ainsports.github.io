@@ -78,6 +78,7 @@
     var currData; 
     var slider = document.getElementById('myRange');
     var thresh = 0.5;
+    var timeStamp;
 
     resetInterface();
 
@@ -98,6 +99,8 @@
       currTimeSummary = 0;
       currTime = 0;  
       currData = undefined;
+      timeStamp = undefined;
+
       $('#status').html("");
       $("#video-summary").hide();
       $("#generate").hide();
@@ -211,6 +214,8 @@
         currTime = 0
         clearInterval(timer) 
         currData = results.data
+        timeStamp = results.data.time_stamp
+        console.log(timeStamp)
         populateList(currData)
         $("#generate").show();
       });
@@ -237,6 +242,7 @@
       var slider = document.getElementById('myRange-sample');
       console.log(thresh)
       data.append('thresh', thresh)
+      data.append('time_stamp', timeStamp )
       axios.request({
       method: "post", 
       url: "https://ainsports.eu.ngrok.io/summarize", 
