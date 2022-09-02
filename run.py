@@ -33,14 +33,14 @@ def initialize_model(args):
     model.load_state_dict(checkpoint['state_dict'])
     return model
 
-def run_test(args, model):
-    dataset_Test = SoccerNetClipsTesting(path=args.video_path, features=args.features, 
+def run_test(args, model, video_path):
+    dataset_Test = SoccerNetClipsTesting(path=video_path, features=args.features, 
         framerate=args.framerate, chunk_size=args.chunk_size*args.framerate, 
         receptive_field=args.receptive_field*args.framerate)
     test_loader = torch.utils.data.DataLoader(dataset_Test,
         batch_size=1, shuffle=False,
         num_workers=1, pin_memory=True)
-    return test(test_loader, model=model, cpu = args.CPU, video_path = 'video.mp4')
+    return test(test_loader, video_path, model=model, cpu = args.CPU)
 
 
 

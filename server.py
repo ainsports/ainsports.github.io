@@ -7,7 +7,7 @@ import os
 import cv2
 import time 
 from flask import jsonify
-
+import datetime
 app = Flask(__name__)
 CORS(app)
 model = initialize_model(args) 
@@ -23,8 +23,10 @@ def recieve():
         print("recieved POST")
         print(request.form)
         f = request.files['file']
-        f.save('video.mp4')
-        cap = cv2.VideoCapture("video.mp4")
+        time_stamp  = datetime.datetime.now().strftime('%m_%d_%Y_%H_%M_%S')
+        video_path = f'video-{time_stamp}.mp4'
+        f.save(video_path)
+        cap = cv2.VideoCapture(video_path)
         length = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
         print("The number of frames is ", length )
         start_time = time.time()
@@ -33,7 +35,7 @@ def recieve():
         print(request.files)
         thresh = float(request.form['thresh'])
         print('prediction with threshold ', thresh) 
-        json_data = run_test(args, model)
+        json_data = run_test(args, model, video_path)
         end_time = time.time()
         print("Total time is ", end_time - start_time)
         return json_data
@@ -43,8 +45,9 @@ def recieve():
 def summarize():
     if request.method == 'POST':
         thresh = float(request.form['thresh'])
+        time_stamp = request.form['time_stamp']
         print('summarizing with ', thresh)
-        video_url = generateSummaryVideo(thresh = thresh)
+        video_url = generateSummaryVideo(time_stamp, thresh = thresh)
         return jsonify({'video_url':video_url})
 
 @app.route('/static/<file>')

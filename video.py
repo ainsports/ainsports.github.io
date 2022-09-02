@@ -13,14 +13,14 @@ def createFolder(folderPath):
     if os.path.exists(folderPath) ==  False:
         os.mkdir(folderPath)
 
-def generateSummaryVideo(video_path = 'video.mp4', prediction_file = "outputs/Predictions-v2.json",
-                         output_path = "static/media", time_span = 2, thresh = 0.5):
+def generateSummaryVideo(time_stamp, output_path = "static/media", time_span = 2, thresh = 0.5):
     secondsBefore = time_span
     secondsAfter = time_span
-    input_file_path = prediction_file
+    video_path = f"video-{time_stamp}.mp4"
+    input_file_path = f"outputs/prediction-{time_stamp}.json"
     predictions = ''
 
-    outputSummaryFile = os.path.join(output_path,'summary.mp4')
+    outputSummaryFile = os.path.join(output_path,f'summary-{time_stamp}.mp4')
     ## read from save file
     
     f = open(input_file_path)

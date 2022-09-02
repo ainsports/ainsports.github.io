@@ -4,10 +4,11 @@ import numpy as np
 from SoccerNet.Downloader import getListGames
 from config.classes import EVENT_DICTIONARY_V2, INVERSE_EVENT_DICTIONARY_V2
 
-def predictions2json(predictions_half_1, output_path, framerate=2):
-
+def predictions2json(predictions_half_1, output_path, video_path, framerate=2):
+    time_stamp = (video_path.split("-")[-1]).split(".")[0]
+    print(time_stamp)
     os.makedirs(output_path, exist_ok=True)
-    output_file_path = output_path + "/Predictions-v2.json"
+    output_file_path = output_path + f"/prediction-{time_stamp}.json"
 
     frames_half_1, class_half_1 = np.where(predictions_half_1 >= 0)
 
@@ -29,8 +30,9 @@ def predictions2json(predictions_half_1, output_path, framerate=2):
         prediction_data["confidence"] = str(confidence)
 
         json_data["predictions"].append(prediction_data)
-
+    json_data["time_stamp"] = time_stamp
     with open(output_file_path, 'w') as output_file:
         json.dump(json_data, output_file, indent=4)
+    
     
     return json_data

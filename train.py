@@ -9,7 +9,7 @@ from preprocessing import batch2long, timestamps2long, visualize, NMS
 from json_io import predictions2json
 from flask import jsonify
 
-def test(dataloader,model, cpu = False, video_path = None):
+def test(dataloader,video_path, model, cpu = False):
 
     spotting_predictions = list()
     segmentation_predictions = list()
@@ -50,5 +50,5 @@ def test(dataloader,model, cpu = False, video_path = None):
 
 
     # Save the predictions to the json format
-    json_data = predictions2json(detections_numpy[0],"outputs/", model.framerate)
+    json_data = predictions2json(detections_numpy[0],"outputs/", video_path, model.framerate)
     return jsonify(json_data)
