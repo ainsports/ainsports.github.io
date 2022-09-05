@@ -58,7 +58,7 @@ def createSummaryWithFade(noOfVideos, outputSummaryFile, fileNamesStr, clipPerio
         
         
         
-def generateSummaryVideo(time_stamp, output_path = "static/media", time_span = 2, thresh = 0.5):
+def generateSummaryVideo(time_stamp, output_path = "static/media", time_span = 2, thresh = 0.5, clipPeriod = 3):
     secondsBefore = time_span
     secondsAfter = time_span
     video_path = f"video-{time_stamp}.mp4"
@@ -116,6 +116,6 @@ def generateSummaryVideo(time_stamp, output_path = "static/media", time_span = 2
            
            #print(cmd)
            #os.system(cmd)
-           createSummaryWithFade(i-1, outputSummaryFile, fileNamesStr, clipPeriod) 
+           createSummaryWithFade(i-1, outputSummaryFile, fileNamesStr, clipPeriod = clipPeriod) 
 
     return "https://ainsports.eu.ngrok.io/"+outputSummaryFile
