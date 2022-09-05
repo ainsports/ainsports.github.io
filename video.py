@@ -58,7 +58,7 @@ def createSummaryWithFade(noOfVideos, outputSummaryFile, fileNamesStr, clipPerio
         
         
         
-def generateSummaryVideo(time_stamp, output_path = "static/media", time_span = 2, thresh = 0.5, clipPeriod = 6):
+def generateSummaryVideo(time_stamp, output_path = "static/media", time_span = 3, thresh = 0.5):
     secondsBefore = time_span
     secondsAfter = time_span
     clipPeriod = secondsBefore + secondsAfter
