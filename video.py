@@ -61,7 +61,7 @@ def createSummaryWithFade(noOfVideos, outputSummaryFile, fileNamesStr, clipPerio
 def generateSummaryVideo(time_stamp, output_path = "static/media", time_span = 2, thresh = 0.5, clipPeriod = 6):
     secondsBefore = time_span
     secondsAfter = time_span
-    #clipPeriod = secondsBefore + secondsAfter
+    clipPeriod = secondsBefore + secondsAfter
     video_path = f"video-{time_stamp}.mp4"
     input_file_path = f"outputs/prediction-{time_stamp}.json"
     predictions = ''
