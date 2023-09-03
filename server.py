@@ -8,16 +8,70 @@ import cv2
 import time 
 from flask import jsonify
 import datetime
+from flask import Flask, jsonify, request
+from flask_jwt_extended import (
+    JWTManager,
+    jwt_required,
+    create_access_token,
+    get_jwt_identity,
+    unset_jwt_cookies,
+    set_access_cookies,
+)
+from flask_cors import CORS
+import datetime
+
 app = Flask(__name__)
+app.config["JWT_SECRET_KEY"] = "your-secret-key"
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = datetime.timedelta(hours=1)  # Set token expiration to 1 hour
+jwt = JWTManager(app)
 CORS(app)
+
+# Sample user data (replace with your user authentication logic)
+users = {
+    "user1": {
+        "username": "user1",
+        "password": "password1",
+    }
+}
+
 model = initialize_model(args) 
 print(args.CPU)
 
+@app.route("/login", methods=["POST"])
+def login():
+    data = request.get_json()
+    username = data.get("username")
+    password = data.get("password")
+
+    user = users.get(username)
+
+    if user and password == user["password"]:
+        access_token = create_access_token(identity=username)
+        response = jsonify(message="Login successful", access_token=access_token)
+        set_access_cookies(response, access_token)  # Set the access token as a cookie
+        return response, 200
+    else:
+        return jsonify(message="Invalid credentials"), 401
+
+@app.route("/protected", methods=["GET"])
+@jwt_required()
+def protected():
+    current_user = get_jwt_identity()
+    return jsonify(message=f"Hello, {current_user}! This is a protected endpoint.")
+
+@app.route("/logout", methods=["POST"])
+def logout():
+    response = jsonify(message="Logged out successfully")
+    unset_jwt_cookies(response)  # Clear the JWT cookies on logout
+    return response, 200
+
 @app.route('/upload')
+@jwt_required()
 def upload_file():
    return render_template('uploadv2.html')
 
 @app.route('/recieve', methods = ['GET', 'POST'])
+@jwt_required()
 def recieve():
     if request.method == 'POST':
         print("recieved POST")
