@@ -30,6 +30,7 @@
 
     <div class="col-4">
       <input type="file" class="d-none" id="addVideosInput" accept=" video/*">
+      <input type="text" class="form-control" placeholder="Token" id="token">
       <button class="btn btn-success" id="addVideo"> Add Video </button>
       <button class="btn btn-primary" id="submit" onclick="upload()" disabled>Submit</button>
       <span id="status"></span>
@@ -88,7 +89,7 @@
   var slider = document.getElementById('myRange');
   var thresh = 0.5;
   var timeStamp;
-  const url = "https://f990-34-122-149-240.ngrok.io"
+  const url = "https://35d8-34-124-186-0.ngrok-free.app"
 
   resetInterface();
 
@@ -202,6 +203,7 @@
     data.append('thresh', thresh)
     console.log(data)
     axios.request({
+      headers: { 'Authorization': "Bearer " + $("#token").val() },
       method: "post",
       url: url + "/recieve",
       data: data,
