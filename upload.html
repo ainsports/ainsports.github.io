@@ -33,7 +33,6 @@
       <input type="text" class="form-control" placeholder="Token" id="token">
       <button class="btn btn-success" id="addVideo"> Add Video </button>
       <button class="btn btn-primary" id="submit" onclick="upload()" disabled>Submit</button>
-      <span id="status"></span>
     </div>
     <div class="col-8">
       <div class="progress">
@@ -48,6 +47,7 @@
   </div>
   <div class="row">
     <div class="col-8">
+      <span id="status"></span>
 
       <div class="video-frame">
       </div>
@@ -89,7 +89,7 @@
   var slider = document.getElementById('myRange');
   var thresh = 0.5;
   var timeStamp;
-  const url = "https://35d8-34-124-186-0.ngrok-free.app"
+  const url = "https://d317-34-90-73-81.ngrok-free.app"
 
   resetInterface();
 
@@ -192,14 +192,11 @@
   }
   function upload() {
     currTime = 0
-    disable()
     $("#video-summary").hide();
-    $('#status').html("Uploading ...");
     var input = document.querySelector('input[type="file"]')
     var data = new FormData()
     data.append('file', input.files[0])
     var slider = document.getElementById('myRange-sample');
-    console.log(thresh)
     data.append('thresh', thresh)
     console.log(data)
     axios.request({
@@ -215,6 +212,7 @@
         $('#upload-bar').html(valeur + '%')
         if (valeur == 100) {
           timer = setInterval(updatePrediction, 1000);
+          disable();
           $('#status').html("Predicting ...");
         }
       }
@@ -230,6 +228,23 @@
       console.log(timeStamp)
       populateList(currData)
       $("#generate").show();
+    }).catch((error) => {
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        $('#status').html('Not Correct Authentication ...');
+      } else if (error.request) {
+        // The request was made but no response was received
+        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+        // http.ClientRequest in node.js
+        $('#status').html('Error connecting to the server ...');
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        $('#status').html('Unkown Error');
+      }
+      valeur = 0;
+      $('#upload-bar').css('width', valeur + '%').attr('aria-valuenow', 0);
+      console.log(error.config);
     });
   }
 
@@ -258,10 +273,12 @@
     axios.request({
       method: "post",
       url: url + "/summarize",
+      headers: { 'Authorization': "Bearer " + $("#token").val() },
       data: data,
     }).then(function (results) {
       $("#video-summary").show();
-      $('#video-summary').attr('src', results.data.video_url)
+      console.log(results.data.video_url)
+      $('#video-summary').attr('src', url + '/' + results.data.video_url)
       $('#status').html("");
       enable();
     });
