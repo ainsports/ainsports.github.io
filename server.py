@@ -96,6 +96,7 @@ def recieve():
 
 
 @app.route('/summarize', methods = ['GET', 'POST'])
+@jwt_required()
 def summarize():
     if request.method == 'POST':
         thresh = float(request.form['thresh'])
@@ -105,6 +106,7 @@ def summarize():
         return jsonify({'video_url':video_url})
 
 @app.route('/static/<file>')
+@jwt_required()
 def video(file):
    return render_template('stream.html',file=file)
 
