@@ -119,4 +119,4 @@ def generateSummaryVideo(time_stamp, output_path = "static/media", time_span = 3
            #os.system(cmd)
            createSummaryWithFade(i-1, outputSummaryFile, fileNamesStr, clipPeriod = clipPeriod) 
 
-    return "https://ainsports.eu.ngrok.io/"+outputSummaryFile
+    return outputSummaryFile
